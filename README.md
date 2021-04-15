@@ -1,2 +1,2 @@
-# Skobel.github.io
-hexo个人博客
+# Skobel.theme.vuepress
+vuepress 自定义主题
