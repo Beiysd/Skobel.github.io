@@ -1,0 +1,30 @@
+{
+  "name": "beiysd",
+  "version": "1.0",
+  "description": "Code Note",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs",
+    "publish": "deploy.sh"
+  },
+  "author": "boboidream",
+  "repository": "github:boboidream/note",
+  "license": "ISC",
+  "devDependencies": {
+    "@vuepress/plugin-back-to-top": "^1.8.2",
+    "@vuepress/plugin-medium-zoom": "^1.8.2",
+    "@vuepress/plugin-pwa": "^1.8.2",
+    "@vuepress/theme-blog": "^2.3.3",
+    "directory-tree": "^2.2.7",
+    "moment": "^2.29.1",
+    "vuepress": "^1.8.2",
+    "vuepress-plugin-autobar": "boboidream/vuepress-bar",
+    "vuepress-plugin-code-copy": "^1.0.6",
+    "vuepress-plugin-fulltext-search": "^2.1.0"
+  },
+  "dependencies": {}
+}
