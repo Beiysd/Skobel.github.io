@@ -1,6 +1,8 @@
 ### GitHub 报错信息记录
 
-## 1.错误信息：OpenSSL SSL_connect: SSL_ERROR_SYSCALL in connection to github.com
+## 1.错误信息
+
+> OpenSSL SSL_connect: SSL_ERROR_SYSCALL in connection to github.com
 
 ### 原因 凭证失效
 

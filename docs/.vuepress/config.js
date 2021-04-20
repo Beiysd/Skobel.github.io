@@ -2,7 +2,7 @@
  * @name:
  * @author: wuxd
  * @Date: 2021-03-20 12:06:48
- * @LastEditTime: 2021-04-16 18:02:04
+ * @LastEditTime: 2021-04-20 17:45:58
  */
 const path = require("path");
 const autoGetSidebarOptionBySrcDir = require("./utils/get-sidebar-by-dir");
@@ -12,7 +12,7 @@ module.exports = {
   description: "Live and Study.",
   head: [
     ["link", { rel: "manifest", href: "/manifest.json" }],
-    ["link", { rel: "apple-touch-icon", href: "assets/logo/pkp.png" }],
+    ["link", { rel: "apple-touch-icon", href: "/assets/logo/pkp.png" }],
   ],
   base: "/",
   serviceWorker: true,
@@ -21,7 +21,7 @@ module.exports = {
   },
   themeConfig: {
     // search: true,
-    logo: "assets/logo/pkp.png",
+    logo: "/assets/logo/pkq.png",
     searchMaxSuggestions: 10,
     nav: [
       { text: "Github", link: "https://github.com/Beiysd" },
@@ -29,11 +29,12 @@ module.exports = {
       { text: "CSDN", link: "https://blog.csdn.net/weixin_40532650" },
     ],
     sidebar: autoGetSidebarOptionBySrcDir(path.resolve(__dirname, "../notes")),
-    lastUpdated: "Last Updated",
+    // lastUpdated: "Last Updated",
   },
   plugins: [
     "@vuepress/plugin-back-to-top",
     "fulltext-search",
+    "@vuepress/plugin-pagination",
     "vuepress-plugin-code-copy",
     [
       "@vuepress/plugin-medium-zoom",
@@ -56,18 +57,58 @@ module.exports = {
       },
     ],
     [
-      "@vssue/vuepress-plugin-vssue",
+      "@vuepress/last-updated",
       {
-        // 设置 `platform` 而不是 `api`
-        platform: "github",
-        locale: "zh", //语言
-
-        // 其他的 Vssue 配置
-        owner: "Beiysd", //github账户名
-        repo: "Beiysd.github.io", //github一个项目的名称
-        clientId: "1cc70f20392d879553b1", //注册的Client ID
-        clientSecret: "cc51797ffb73f49d381f6599f4d207fc9a191e20", //注册的Client Secret
-        autoCreateIssue: true, // 自动创建评论，默认是false，最好开启，这样首次进入页面的时候就不用去点击创建评论的按钮了
+        transformer: (timestamp) => {
+          const moment = require("moment");
+          moment.locale("zh-CN");
+          return moment(timestamp).format("YYYY-MM-DD HH:mm:ss");
+        },
+      },
+    ],
+    [
+      "@vuepress/blog",
+      {
+        directives: [
+          {
+            id: "post",
+            dirname: "notes",
+            path: "/post/",
+            itemPermalink: "/post/:year/:month/:day/:slug",
+            pagination: {
+              lengthPerPage: 2,
+            },
+          },
+        ],
+        forntmatters: [
+          {
+            id: "tag",
+            keys: ["tag"],
+            path: "/tag/",
+            layout: "Tags",
+            scopeLayout: "Tag",
+          },
+          {
+            id: "location",
+            keys: ["location"],
+            path: "/location/",
+            // layout: 'Location', defaults to `FrontmatterKey`.
+            frontmatter: { title: "Location" },
+          },
+        ],
+        globalPagination: {
+          lengthPerPage: 5,
+        },
+        // sitemap: {
+        //   hostname: "https//beiysd.top",
+        // },
+        comment: {
+          service: "vssue",
+          owner: "Beiysd",
+          repo: "Beiysd.github.io",
+          clientId: "1cc70f20392d879553b1",
+          clientSecret: "cc51797ffb73f49d381f6599f4d207fc9a191e20",
+        },
       },
     ],
   ],

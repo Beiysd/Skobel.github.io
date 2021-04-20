@@ -1,10 +1,3 @@
-<!--
- * @name:
- * @author: wuxd
- * @Date: 2021-04-15 16:57:02
- * @LastEditTime: 2021-04-16 16:37:22
--->
-
 ### Checkbox
 
 ### 半选状态
@@ -63,5 +56,3 @@ boxChecked = (e, ind) => {
   })}
 </div>;
 ```
-
-<Vssue />

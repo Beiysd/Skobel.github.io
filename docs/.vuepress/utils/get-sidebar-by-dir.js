@@ -2,7 +2,7 @@
  * @name:
  * @author: wuxd
  * @Date: 2021-03-24 10:20:33
- * @LastEditTime: 2021-04-15 17:25:19
+ * @LastEditTime: 2021-04-19 10:46:33
  */
 const path = require("path");
 const dirTree = require("directory-tree");
@@ -18,7 +18,7 @@ function toSidebarOption(tree = []) {
       return {
         title: v.name.split("-")[1],
         // collapsable: false, // 可选的, 默认值是 true,
-        sidebarDepth: 5,
+        sidebarDepth: 10,
         children: toSidebarOption(v.children),
       };
     } else {
