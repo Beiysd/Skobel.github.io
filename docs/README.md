@@ -2,19 +2,19 @@
 
 # layout: HomeLayout
 
-# home: true
+home: true
 
-# heroImage: "/assets/logo/pkq.png"
+heroImage: "/assets/logo/pkq.png"
 
-# heroText: Beiysd
+heroText: Beiysd
 
-# tagline: Live and Study
+tagline: Live and Study
 
-# actionText: Note →
+actionText: Note →
 
-# describe: Live and Study.
+describe: Live and Study.
 
-# actionLink: /notes/10-前端/10-CSS/10-Antd3.x/Checkbox
+actionLink: /notes/10-前端/10-CSS/10-Antd3.x/Checkbox
 
 # features:
 
