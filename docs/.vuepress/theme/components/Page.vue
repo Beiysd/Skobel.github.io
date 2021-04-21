@@ -2,39 +2,80 @@
  * @name: 
  * @author: wuxd
  * @Date: 2021-04-20 18:01:42
- * @LastEditTime: 2021-04-20 18:54:03
+ * @LastEditTime: 2021-04-21 15:43:40
 -->
 <template>
   <main class="page">
+    <h3 class="page_title" v-if="bigSize">{{ $page.title }}</h3>
+    <h3 class="page_title_smal" v-else-if="!bigSize">
+      {{ $page.title }}
+    </h3>
+    <ul :class="bigSize ? 'uls' : 'uls_small'">
+      <li class="lis" title="标签">
+        <img class="icons" src="../../public/assets/logo/tag.svg" />{{
+          $page.frontmatter.tag
+        }}
+      </li>
+      <li class="lis" title="更新时间">
+        <img class="icons" src="../../public/assets/logo/clock.svg" />{{
+          this.times()
+        }}
+      </li>
+      <li class="lis" title="浏览人数">
+        <img class="icons" src="../../public/assets/logo/eye.svg" />123
+      </li>
+    </ul>
     <slot name="top" />
 
     <Content class="theme-default-content" />
     <!-- 更新时间 -->
-    <PageEdit />
+    <!-- <PageEdit /> -->
 
     <!-- 上一页/下一页 -->
     <PageNav v-bind="{ sidebarItems }" />
 
     <slot name="bottom" />
-    <button @click="goTop">up</button>
+    <button @click="messShow">click</button>
+    <BackTop />
   </main>
 </template>
 
 <script>
 import PageEdit from "@theme/components/PageEdit.vue";
 import PageNav from "@theme/components/PageNav.vue";
-import $ from "jquery";
+import BackTop from "@theme/components/BackTop.vue";
+import moment from "moment";
 
 export default {
-  components: { PageEdit, PageNav },
+  components: { PageEdit, PageNav, BackTop },
   props: ["sidebarItems"],
+  data() {
+    return {
+      bigSize: true,
+    };
+  },
+  mounted() {
+    window.addEventListener("resize", this.sizeChange, true);
+  },
   methods: {
-    goTop() {
-      let times = 100; //返回顶部的时间-默认100ms,最大为500ms
-      if (window) {
-        times = window.scrollY > 500 ? 500 : window.scrollY;
-        $("html,body").animate({ scrollTop: 0 }, times);
+    messShow() {
+      console.log("=======", this.$page, this.$site);
+    },
+    sizeChange() {
+      let widths = document.documentElement.clientWidth || 0;
+      console.log("widthsss", widths);
+      if (widths <= 400) {
+        this.bigSize = false;
+      } else {
+        this.bigSize = true;
       }
+    },
+  },
+  computed: {
+    times() {
+      return function() {
+        return moment(this.$page.lastUpdated).format("YYYY-MM-DD");
+      };
     },
   },
 };
@@ -44,6 +85,43 @@ export default {
 @require '../styles/wrapper.styl'
 
 .page
+  margin-top 5rem
   padding-bottom 2rem
   display block
+
+.page_title
+  padding 0 2rem
+  text-align center
+
+.page_title_smal
+  padding 0 1.5rem
+  text-align center
+
+.uls
+  display flex
+  align-items center
+  justify-content center
+  margin-bottom: -2.5rem;
+  padding: 0 2.5rem;
+
+.uls_small
+  display flex
+  align-items center
+  justify-content center
+  margin-bottom: -2.5rem;
+  padding: 0 0.5rem;
+
+.lis
+  list-style none
+  display flex
+  margin-right: 1rem;
+  align-items center
+  cursor default
+  font-size: 15px
+  font-weight: 500
+  color: #999
+
+.icons
+  width 15px
+  margin-right 3px
 </style>

@@ -2,7 +2,7 @@
  * @name:
  * @author: wuxd
  * @Date: 2021-03-24 10:20:33
- * @LastEditTime: 2021-04-19 10:46:33
+ * @LastEditTime: 2021-04-21 16:48:22
  */
 const path = require("path");
 const dirTree = require("directory-tree");
@@ -15,6 +15,7 @@ function toSidebarOption(tree = []) {
 
   return tree.map((v) => {
     if (v.type === "directory") {
+      // console.log("vvv", v);
       return {
         title: v.name.split("-")[1],
         // collapsable: false, // 可选的, 默认值是 true,
@@ -22,10 +23,15 @@ function toSidebarOption(tree = []) {
         children: toSidebarOption(v.children),
       };
     } else {
+      // console.log("vvv111", v);
       // 因为所有的md文件必须放到'docs'文件夹下
       // 所以相对路径就是'docs'后面的部分
       // 最后把扩展名去掉, 就是路由的路径
-      return v.path.split("docs")[1].replace(/\.md$/, "");
+      // return v.path.split("docs")[1].replace(/\.md$/, "");
+      return {
+        title: v.name.split(".")[0],
+        path: v.path.split("docs")[1].replace(/\.md$/, ""),
+      };
     }
   });
 }

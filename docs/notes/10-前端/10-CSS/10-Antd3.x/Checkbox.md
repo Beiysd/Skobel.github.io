@@ -1,4 +1,10 @@
-### Checkbox
+---
+tag: antd
+author: beiysd
+title: Checkbox
+---
+
+<!-- ### Checkbox -->
 
 ### 半选状态
 
