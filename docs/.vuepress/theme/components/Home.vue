@@ -39,18 +39,32 @@
     <div v-if="data.footer" class="footer">
       {{ data.footer }}
     </div>
-    <div>这是首页底部</div>
+    <div>这是首页底部-建设中...<br />访问量：{{ this.visite }}</div>
   </main>
 </template>
 
 <script>
 import NavLink from "@theme/components/NavLink.vue";
+import { getCount } from "../util/tongji";
 
 export default {
   name: "Home",
+  data() {
+    return {
+      visite: 0,
+    };
+  },
 
   components: { NavLink },
-
+  mounted() {
+    this.visiteChange();
+  },
+  methods: {
+    visiteChange: async function() {
+      const num = await getCount("home");
+      this.visite = num;
+    },
+  },
   computed: {
     data() {
       return this.$page.frontmatter;

@@ -23,6 +23,7 @@
     "@vuepress/plugin-pagination": "^1.0.0-alpha.0",
     "@vuepress/plugin-pwa": "^1.8.2",
     "@vuepress/theme-blog": "^2.3.3",
+    "axios": "^0.21.1",
     "directory-tree": "^2.2.7",
     "element-ui": "^2.15.1",
     "jquery": "^3.6.0",

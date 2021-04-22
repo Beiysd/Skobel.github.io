@@ -2,7 +2,7 @@
  * @name: 
  * @author: wuxd
  * @Date: 2021-04-20 18:01:42
- * @LastEditTime: 2021-04-21 15:43:40
+ * @LastEditTime: 2021-04-22 19:08:00
 -->
 <template>
   <main class="page">
@@ -22,7 +22,9 @@
         }}
       </li>
       <li class="lis" title="浏览人数">
-        <img class="icons" src="../../public/assets/logo/eye.svg" />123
+        <img class="icons" src="../../public/assets/logo/eye.svg" />{{
+          this.visite
+        }}
       </li>
     </ul>
     <slot name="top" />
@@ -35,7 +37,7 @@
     <PageNav v-bind="{ sidebarItems }" />
 
     <slot name="bottom" />
-    <button @click="messShow">click</button>
+    <!-- <button @click="messShow">click</button> -->
     <BackTop />
   </main>
 </template>
@@ -45,6 +47,7 @@ import PageEdit from "@theme/components/PageEdit.vue";
 import PageNav from "@theme/components/PageNav.vue";
 import BackTop from "@theme/components/BackTop.vue";
 import moment from "moment";
+import { getCount } from "../util/tongji";
 
 export default {
   components: { PageEdit, PageNav, BackTop },
@@ -52,23 +55,42 @@ export default {
   data() {
     return {
       bigSize: true,
+      visite: 0,
+      pathurl: "",
     };
   },
-  mounted() {
-    window.addEventListener("resize", this.sizeChange, true);
+  watch: {
+    // 监听路由变化
+    "$route.path": function(newVal, oldVal) {
+      // console.log(`new_path = ${newVal}, old_path = ${oldVal}`);
+      this.visiteChange();
+    },
   },
+
+  mounted() {
+    this.pathurl = this.$page.path;
+    window.addEventListener("resize", this.sizeChange, true);
+    this.visiteChange();
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.sizeChange, true);
+  },
+
   methods: {
     messShow() {
       console.log("=======", this.$page, this.$site);
     },
     sizeChange() {
       let widths = document.documentElement.clientWidth || 0;
-      console.log("widthsss", widths);
       if (widths <= 400) {
         this.bigSize = false;
       } else {
         this.bigSize = true;
       }
+    },
+    visiteChange: async function() {
+      const num = await getCount(this.$page.path);
+      this.visite = num;
     },
   },
   computed: {
