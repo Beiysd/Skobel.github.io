@@ -2,7 +2,7 @@
  * @name: 
  * @author: wuxd
  * @Date: 2021-04-20 18:01:42
- * @LastEditTime: 2021-04-22 19:08:00
+ * @LastEditTime: 2021-04-23 17:19:01
 -->
 <template>
   <main class="page">
@@ -37,7 +37,7 @@
     <PageNav v-bind="{ sidebarItems }" />
 
     <slot name="bottom" />
-    <!-- <button @click="messShow">click</button> -->
+    <button @click="messShow">click</button>
     <BackTop />
   </main>
 </template>

@@ -2,7 +2,7 @@
  * @name:
  * @author: wuxd
  * @Date: 2021-04-22 09:25:01
- * @LastEditTime: 2021-04-22 14:40:31
+ * @LastEditTime: 2021-04-23 16:55:14
  */
 import $ from "jquery";
 var nowPageUrl = "";
@@ -51,19 +51,32 @@ async function getBaidu() {
 function visiteNum(data) {
   var visite = 0;
   //计算总浏览量
-  if (nowPageUrl === "home" && data && data.sourceSite) {
-    visite = data.sourceSite.items[0][1];
-  } else if (data && data.visitPage) {
-    //计算单页面浏览量
-    // encodeURI-转码
-    // decodeURI-解码
-    //受访页面列表
-    const items = data.visitPage.items || [];
-    //当前页面完整地址
-    const pathurl = window.location.origin + nowPageUrl;
-    for (let i = 0; i < items.length; i++) {
-      if (items[i][0] === pathurl) {
-        visite = items[i][1];
+
+  if (data && data.visitPage) {
+    if (nowPageUrl === "home") {
+      // visite = data.sourceSite.items[0][1];-直观统计包括了本地测试域名和正式域名浏览量之和
+      //受访页面列表
+      const items = data.visitPage.items || [];
+      //查询对应域名下精确统计总数
+      const arrs = items.filter(
+        (v) => v[0].indexOf(window.location.origin) > -1
+      );
+      visite = arrs.reduce((pre, cur) => {
+        pre += Number(cur[1]);
+        return pre;
+      }, 0);
+    } else {
+      //计算单页面浏览量
+      // encodeURI-转码
+      // decodeURI-解码
+      //受访页面列表
+      const items = data.visitPage.items || [];
+      //当前页面完整地址
+      const pathurl = window.location.origin + nowPageUrl;
+      for (let i = 0; i < items.length; i++) {
+        if (items[i][0] === pathurl) {
+          visite = items[i][1];
+        }
       }
     }
   }

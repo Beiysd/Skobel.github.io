@@ -4,3 +4,4 @@ node_modules
 dist.zip
 
 yarn-error.log*
+/.vuepress/dist
