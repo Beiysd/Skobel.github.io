@@ -2,7 +2,7 @@
  * @name: 
  * @author: wuxd
  * @Date: 2021-04-20 18:01:42
- * @LastEditTime: 2021-04-23 17:19:01
+ * @LastEditTime: 2021-04-25 10:40:53
 -->
 <template>
   <main class="page">
@@ -11,7 +11,17 @@
       {{ $page.title }}
     </h3>
     <ul :class="bigSize ? 'uls' : 'uls_small'">
-      <li class="lis" title="标签">
+      <li class="lis" title="作者" v-if="bigSize">
+        <img class="icons" src="../../public/assets/logo/head.svg" />{{
+          $page.frontmatter.author
+        }}
+      </li>
+      <li class="lis" title="分类">
+        <img class="icons" src="../../public/assets/logo/catalog.svg" />{{
+          this.types()
+        }}
+      </li>
+      <li class="lis" title="标签" v-if="$page.frontmatter.tag && bigSize">
         <img class="icons" src="../../public/assets/logo/tag.svg" />{{
           $page.frontmatter.tag
         }}
@@ -21,6 +31,7 @@
           this.times()
         }}
       </li>
+
       <li class="lis" title="浏览人数">
         <img class="icons" src="../../public/assets/logo/eye.svg" />{{
           this.visite
@@ -97,6 +108,22 @@ export default {
     times() {
       return function() {
         return moment(this.$page.lastUpdated).format("YYYY-MM-DD");
+      };
+    },
+    types() {
+      return function() {
+        const arr = this.$page.relativePath.split("/");
+        const firstName = arr[1]
+          ? arr[1].indexOf("-") > -1
+            ? arr[1].split("-")[1]
+            : arr[1]
+          : "";
+        const secondName = arr[2]
+          ? arr[2].indexOf("-") > -1
+            ? arr[2].split("-")[1]
+            : arr[2]
+          : "";
+        return firstName + "/" + secondName.replace(/\.md$/, "");
       };
     },
   },

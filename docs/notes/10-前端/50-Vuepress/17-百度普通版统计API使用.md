@@ -1,5 +1,5 @@
 ---
-tag: vuepress
+tag: Vuepress
 author: beiysd
 title: 百度-普通版统计 API 使用
 ---

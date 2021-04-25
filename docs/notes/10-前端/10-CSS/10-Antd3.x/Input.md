@@ -1,4 +1,8 @@
-### Input
+---
+tag: antd3.x
+author: beiysd
+title: Input
+---
 
 ## 输入框颜色统一更改
 

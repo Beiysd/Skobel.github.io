@@ -1,4 +1,8 @@
-### 在线读音-百度 api 示例
+---
+tag: JavaScript
+author: beiysd
+title: 在线读音-百度 api 示例
+---
 
 > 参考：https://www.cnblogs.com/HelloBytes/p/13069667.html
 

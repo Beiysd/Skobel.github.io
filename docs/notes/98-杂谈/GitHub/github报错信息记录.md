@@ -1,4 +1,9 @@
-### GitHub 报错信息记录
+---
+tag: false
+author: beiysd
+title: GitHub 报错信息记录
+type: GitHub
+---
 
 ## 1.错误信息
 

@@ -5,3 +5,4 @@ dist.zip
 
 yarn-error.log*
 /.vuepress/dist
+docs/.vuepress/dist

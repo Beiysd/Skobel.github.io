@@ -1,4 +1,9 @@
-### github clone 速度慢解决方法
+---
+tag: false
+author: beiysd
+title: github clone 速度慢解决方法
+type: GitHub
+---
 
 :::tip
 转载地址：https://www.jianshu.com/p/fb9848d5418c

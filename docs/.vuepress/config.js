@@ -2,7 +2,7 @@
  * @name:
  * @author: wuxd
  * @Date: 2021-03-20 12:06:48
- * @LastEditTime: 2021-04-21 11:48:40
+ * @LastEditTime: 2021-04-25 09:05:48
  */
 const path = require("path");
 const autoGetSidebarOptionBySrcDir = require("./utils/get-sidebar-by-dir");
@@ -35,9 +35,15 @@ module.exports = {
     logo: "/assets/logo/pkq.png",
     searchMaxSuggestions: 10,
     nav: [
-      { text: "Github", link: "https://github.com/Beiysd" },
-      { text: "Gitee", link: "https://gitee.com/beiysd" },
-      { text: "CSDN", link: "https://blog.csdn.net/weixin_40532650" },
+      {
+        text: "外链",
+        link: "wailian",
+        items: [
+          { text: "Github", link: "https://github.com/Beiysd" },
+          { text: "Gitee", link: "https://gitee.com/beiysd" },
+          { text: "CSDN", link: "https://blog.csdn.net/weixin_40532650" },
+        ],
+      },
     ],
     sidebar: autoGetSidebarOptionBySrcDir(path.resolve(__dirname, "../notes")),
     lastUpdated: "上次更新",

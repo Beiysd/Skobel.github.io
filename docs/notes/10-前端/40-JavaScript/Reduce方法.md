@@ -1,4 +1,8 @@
-### Reduce
+---
+tag: JavaScript
+author: beiysd
+title: Reduce
+---
 
 ### 定义
 

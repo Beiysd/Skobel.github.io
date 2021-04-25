@@ -1,5 +1,5 @@
 ---
-tag: antd
+tag: antd3.x
 author: beiysd
 title: Checkbox
 ---

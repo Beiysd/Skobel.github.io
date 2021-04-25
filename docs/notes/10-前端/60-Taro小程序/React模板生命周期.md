@@ -1,4 +1,8 @@
-### React 模板生命周期
+---
+tag: Taro
+author: beiysd
+title: React 模板生命周期
+---
 
 :::tip
 注意：当前 taro 版本为 3.x

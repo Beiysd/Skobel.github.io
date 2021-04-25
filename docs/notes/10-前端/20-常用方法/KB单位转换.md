@@ -1,4 +1,8 @@
-### KB 单位转换
+---
+tag: function
+author: beiysd
+title: KB 单位转换
+---
 
 ```js
 /**

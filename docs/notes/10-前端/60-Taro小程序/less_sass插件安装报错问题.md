@@ -1,10 +1,14 @@
-### less、sass 插件安装报错问题
+---
+tag: Taro
+author: beiysd
+title: less、sass 插件安装报错问题
+---
 
-- 场景
+### 场景
 
 ![场景](/assets/md-imgs/taro-error-01.png)
 
--解决
+### 解决
 
 根据报错，安装对应插件，依旧提示同样错误
 

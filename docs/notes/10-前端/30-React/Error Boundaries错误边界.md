@@ -1,6 +1,10 @@
-### Error Boundaries 错误边界
+---
+tag: React
+author: beiysd
+title: Error Boundaries 错误边界
+---
 
-参考：https://zh-hans.reactjs.org/docs/error-boundaries.html
+> 参考：https://zh-hans.reactjs.org/docs/error-boundaries.html
 
 ## 1.环境：
 

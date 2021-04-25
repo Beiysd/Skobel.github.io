@@ -1,7 +1,13 @@
 #!/usr/bin/env sh
+###
+ # @name: 
+ # @author: wuxd
+ # @Date: 2021-04-15 16:57:02
+ # @LastEditTime: 2021-04-25 08:57:02
+### 
 
 # 确保脚本抛出遇到的错误
-# set -e
+set -e
 
 # 生成静态文件
 yarn docs:build

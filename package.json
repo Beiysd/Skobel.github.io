@@ -9,7 +9,7 @@
   "scripts": {
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "publish": "deploy.sh"
+    "deploy": "base deploy.sh"
   },
   "author": "boboidream",
   "repository": "github:boboidream/note",

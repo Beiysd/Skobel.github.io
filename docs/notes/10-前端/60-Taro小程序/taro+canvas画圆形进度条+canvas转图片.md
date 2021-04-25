@@ -1,10 +1,14 @@
-### taro+canvas 画圆形进度条+canvas 转图片
+---
+tag: Taro
+author: beiysd
+title: taro+canvas 画圆形进度条+canvas 转图片
+---
 
-- 效果
+### 效果
 
 ![效果](/assets/md-imgs/canvas-01.png)
 
-- 代码
+### 代码
 
 ```js
 /**

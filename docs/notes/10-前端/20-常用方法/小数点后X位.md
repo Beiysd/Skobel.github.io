@@ -1,4 +1,8 @@
-### 小数点后 x 位
+---
+tag: function
+author: beiysd
+title: 小数点后 x 位
+---
 
 ```js
 /**
