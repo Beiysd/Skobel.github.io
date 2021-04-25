@@ -3,7 +3,7 @@
  # @name: 
  # @author: wuxd
  # @Date: 2021-04-15 16:57:02
- # @LastEditTime: 2021-04-25 08:57:02
+ # @LastEditTime: 2021-04-25 11:12:33
 ### 
 
 # 确保脚本抛出遇到的错误
@@ -19,7 +19,8 @@ cd docs/.vuepress/dist
 # echo 'www.example.com' > CNAME
 
 git init 
-git add -A
+git remote add origin git@github.com:Beiysd/Beiysd.github.io.git
+git add .
 git commit -m 'xxx'
 
 # 如果发布到 https://<USERNAME>.github.io  USERNAME=你的用户名 
