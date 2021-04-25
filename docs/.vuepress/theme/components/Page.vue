@@ -2,26 +2,26 @@
  * @name: 
  * @author: wuxd
  * @Date: 2021-04-20 18:01:42
- * @LastEditTime: 2021-04-25 10:40:53
+ * @LastEditTime: 2021-04-25 17:20:04
 -->
 <template>
   <main class="page">
-    <h3 class="page_title" v-if="bigSize">{{ $page.title }}</h3>
-    <h3 class="page_title_smal" v-else-if="!bigSize">
+    <h3 class="page_title" v-if="widthIf">{{ $page.title }}</h3>
+    <h3 class="page_title_smal" v-else-if="!widthIf">
       {{ $page.title }}
     </h3>
-    <ul :class="bigSize ? 'uls' : 'uls_small'">
-      <li class="lis" title="作者" v-if="bigSize">
+    <ul :class="widthIf ? 'uls' : 'uls_small'">
+      <li class="lis" title="作者" v-if="widthIf">
         <img class="icons" src="../../public/assets/logo/head.svg" />{{
           $page.frontmatter.author
         }}
       </li>
-      <li class="lis" title="分类">
+      <li class="lis" title="分类" v-if="!$page.frontmatter.alone">
         <img class="icons" src="../../public/assets/logo/catalog.svg" />{{
           this.types()
         }}
       </li>
-      <li class="lis" title="标签" v-if="$page.frontmatter.tag && bigSize">
+      <li class="lis" title="标签" v-if="$page.frontmatter.tag && widthIf">
         <img class="icons" src="../../public/assets/logo/tag.svg" />{{
           $page.frontmatter.tag
         }}
@@ -59,13 +59,13 @@ import PageNav from "@theme/components/PageNav.vue";
 import BackTop from "@theme/components/BackTop.vue";
 import moment from "moment";
 import { getCount } from "../util/tongji";
+import { articleType } from "../util";
 
 export default {
   components: { PageEdit, PageNav, BackTop },
-  props: ["sidebarItems"],
+  props: ["sidebarItems", "widthIf"],
   data() {
     return {
-      bigSize: true,
       visite: 0,
       pathurl: "",
     };
@@ -80,7 +80,6 @@ export default {
 
   mounted() {
     this.pathurl = this.$page.path;
-    window.addEventListener("resize", this.sizeChange, true);
     this.visiteChange();
   },
   destroyed() {
@@ -90,14 +89,6 @@ export default {
   methods: {
     messShow() {
       console.log("=======", this.$page, this.$site);
-    },
-    sizeChange() {
-      let widths = document.documentElement.clientWidth || 0;
-      if (widths <= 400) {
-        this.bigSize = false;
-      } else {
-        this.bigSize = true;
-      }
     },
     visiteChange: async function() {
       const num = await getCount(this.$page.path);
@@ -112,18 +103,7 @@ export default {
     },
     types() {
       return function() {
-        const arr = this.$page.relativePath.split("/");
-        const firstName = arr[1]
-          ? arr[1].indexOf("-") > -1
-            ? arr[1].split("-")[1]
-            : arr[1]
-          : "";
-        const secondName = arr[2]
-          ? arr[2].indexOf("-") > -1
-            ? arr[2].split("-")[1]
-            : arr[2]
-          : "";
-        return firstName + "/" + secondName.replace(/\.md$/, "");
+        return articleType(this.$page.relativePath);
       };
     },
   },
@@ -166,11 +146,11 @@ export default {
   margin-right: 1rem;
   align-items center
   cursor default
-  font-size: 15px
+  font-size: 14px
   font-weight: 500
   color: #999
 
 .icons
   width 15px
-  margin-right 3px
+  margin-right 5px
 </style>

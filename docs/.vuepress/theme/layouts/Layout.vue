@@ -5,11 +5,19 @@
     @touchstart="onTouchStart"
     @touchend="onTouchEnd"
   >
-    <Navbar v-if="shouldShowNavbar" @toggle-sidebar="toggleSidebar" />
+    <Navbar
+      v-if="shouldShowNavbar"
+      @toggle-sidebar="toggleSidebar"
+      v-on:getWidthIf="getWidthIf"
+    />
 
     <div class="sidebar-mask" @click="toggleSidebar(false)" />
 
-    <Sidebar :items="sidebarItems" @toggle-sidebar="toggleSidebar">
+    <Sidebar
+      :items="sidebarItems"
+      @toggle-sidebar="toggleSidebar"
+      :widthIf="widthIf"
+    >
       <template #top>
         <slot name="sidebar-top" />
       </template>
@@ -18,9 +26,9 @@
       </template>
     </Sidebar>
 
-    <Home v-if="$page.frontmatter.home" />
+    <Home v-if="$page.frontmatter.home" :widthIf="widthIf" />
 
-    <Page v-else :sidebar-items="sidebarItems">
+    <Page v-else :sidebar-items="sidebarItems" :widthIf="widthIf">
       <template #top>
         <slot name="page-top" />
       </template>
@@ -36,6 +44,7 @@ import Home from "@theme/components/Home.vue";
 import Navbar from "@theme/components/Navbar.vue";
 import Page from "@theme/components/Page.vue";
 import Sidebar from "@theme/components/Sidebar.vue";
+import Footer from "@theme/components/Footer.vue";
 import { resolveSidebarItems } from "../util";
 
 export default {
@@ -46,11 +55,13 @@ export default {
     Page,
     Sidebar,
     Navbar,
+    Footer,
   },
 
   data() {
     return {
       isSidebarOpen: false,
+      widthIf: null,
     };
   },
 
@@ -131,6 +142,10 @@ export default {
           this.toggleSidebar(false);
         }
       }
+    },
+    //接收窗口宽度变化
+    getWidthIf(value) {
+      this.widthIf = value;
     },
   },
 };

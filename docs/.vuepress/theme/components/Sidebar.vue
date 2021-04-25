@@ -1,28 +1,31 @@
+<!--
+ * @name: 
+ * @author: wuxd
+ * @Date: 2021-04-20 18:01:42
+ * @LastEditTime: 2021-04-25 18:16:35
+-->
 <template>
   <aside class="sidebar">
     <NavLinks />
 
     <slot name="top" />
 
-    <SidebarLinks
-      :depth="0"
-      :items="items"
-    />
+    <SidebarLinks :depth="0" :items="items" v-if="widthIf" />
     <slot name="bottom" />
   </aside>
 </template>
 
 <script>
-import SidebarLinks from '@theme/components/SidebarLinks.vue'
-import NavLinks from '@theme/components/NavLinks.vue'
+import SidebarLinks from "@theme/components/SidebarLinks.vue";
+import NavLinks from "@theme/components/NavLinks.vue";
 
 export default {
-  name: 'Sidebar',
+  name: "Sidebar",
 
   components: { SidebarLinks, NavLinks },
 
-  props: ['items']
-}
+  props: ["items", "widthIf"],
+};
 </script>
 
 <style lang="stylus">
@@ -39,6 +42,7 @@ export default {
     padding 0.5rem 0 0.75rem 0
     a
       font-weight 600
+      font-size 14px
     .nav-item, .repo-link
       display block
       line-height 1.25rem
