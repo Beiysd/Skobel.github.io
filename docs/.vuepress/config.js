@@ -2,7 +2,7 @@
  * @name:
  * @author: wuxd
  * @Date: 2021-03-20 12:06:48
- * @LastEditTime: 2021-04-25 09:05:48
+ * @LastEditTime: 2021-04-26 18:35:50
  */
 const path = require("path");
 const autoGetSidebarOptionBySrcDir = require("./utils/get-sidebar-by-dir");
@@ -32,7 +32,7 @@ module.exports = {
   },
   themeConfig: {
     // search: true,
-    logo: "/assets/logo/pkq.png",
+    logo: "/assets/logo/pkp.png",
     searchMaxSuggestions: 10,
     nav: [
       {
@@ -46,12 +46,21 @@ module.exports = {
       },
     ],
     sidebar: autoGetSidebarOptionBySrcDir(path.resolve(__dirname, "../notes")),
-    lastUpdated: "上次更新",
+    lastUpdated: "last Update",
   },
   plugins: [
     "fulltext-search",
-    "@vuepress/plugin-pagination",
     "vuepress-plugin-code-copy",
+    [
+      "@vuepress/last-updated",
+      {
+        transformer: (timestamp) => {
+          const moment = require("moment");
+          moment.locale("zh-CN");
+          return moment(timestamp).format("YYYY-MM-DD HH:mm:ss");
+        },
+      },
+    ],
     [
       "@vuepress/plugin-medium-zoom",
       {
@@ -69,16 +78,6 @@ module.exports = {
         updatePopup: {
           message: "有新的内容更新",
           buttonText: "刷新",
-        },
-      },
-    ],
-    [
-      "@vuepress/last-updated",
-      {
-        transformer: (timestamp) => {
-          const moment = require("moment");
-          moment.locale("zh-CN");
-          return moment(timestamp).format("YYYY-MM-DD HH:mm:ss");
         },
       },
     ],

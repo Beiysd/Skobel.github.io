@@ -1,50 +1,11 @@
 <template>
   <div>
-    <div class="banner">
-      <!-- <img class="home_banner" src="../../public/assets/md-imgs/home/9958.jpg" /> -->
-    </div>
+    <div class="banner" />
     <main
       class="home"
       :aria-labelledby="data.heroText !== null ? 'main-title' : null"
     >
-      <!-- <header class="hero">
-      <img
-        v-if="data.heroImage"
-        :src="$withBase(data.heroImage)"
-        :alt="data.heroAlt || 'hero'"
-      />
-
-      <h1 v-if="data.heroText !== null" id="main-title">
-        {{ data.heroText || $title || "Hello" }}
-      </h1>
-
-      <p v-if="data.tagline !== null" class="description">
-        {{ data.tagline || $description || "Welcome to your VuePress site" }}
-      </p>
-
-      <p v-if="data.actionText && data.actionLink" class="action">
-        <NavLink class="action-button" :item="actionLink" />
-      </p>
-    </header>
-
-    <div v-if="data.features && data.features.length" class="features">
-      <div
-        v-for="(feature, index) in data.features"
-        :key="index"
-        class="feature"
-      >
-        <h2>{{ feature.title }}</h2>
-        <p>{{ feature.details }}</p>
-      </div>
-    </div>
-
-    <Content class="theme-default-content custom" />
-
-    <div class="footer">
-      {{ data.footer }}
-      footer
-    </div> -->
-      <div>
+      <div class="content_left">
         <div class="new_title">最新Blog</div>
         <ul class="home_ul">
           <router-link
@@ -68,6 +29,25 @@
             </div>
           </router-link>
         </ul>
+      </div>
+      <div class="content_right" v-if="widthIf">
+        <div class="user_logo_body">
+          <img :src="this.$site.themeConfig.logo" class="user_logo" />
+        </div>
+        <div>
+          <li>
+            <img
+              class="foot_icons"
+              src="../../public/assets/logo/article.svg"
+            />{{ this.$site.pages.length }}
+          </li>
+          |
+          <li>
+            <img class="foot_icons" src="../../public/assets/logo/eye.svg" />{{
+              this.$site.pages.length
+            }}
+          </li>
+        </div>
       </div>
     </main>
     <Footer v-on:getChild="getChild" :visite="this.visite" />
@@ -114,7 +94,6 @@ export default {
       const list = arrNext.sort((a, b) =>
         this.timeNumber(a.lastUpdated) > this.timeNumber(b.lastUpdated) ? -1 : 1
       );
-      console.log("list===", list);
       this.articles = list.slice(0, 6);
     },
   },
@@ -152,13 +131,28 @@ export default {
   background: url(/assets/md-imgs/home/bg_03.jpg) center center / cover no-repeat
 .new_title
   display: inline-block;
-  padding: 2px 10px;
-  border-radius: 4px;
-  background: rgb(62, 175, 124);
-  font-size: 15px;
-  letter-spacing: 1px;
-  font-weight: 600;
-  color: #fff;
+  padding: 2px 10px
+  border-radius: 4px
+  background: rgb(62, 175, 124)
+  font-size: 15px
+  letter-spacing: 1px
+  font-weight: 600
+  color: #fff
+
+.content_left
+  flex 4
+.content_right
+  flex 1
+  padding 0 30px
+.user_logo_body
+  border-radius 50%
+  box-shadow 0 0 6px 0 #ccc
+.user_logo
+  width 130px
+  margin 20px
+  margin-left 28px
+
+
 .home_ul
   padding 0
 .ul_li,
@@ -175,6 +169,8 @@ export default {
 .ul_li:hover
   box-shadow: 0 0 6px 0 rgb(62, 175, 124)
   color rgb(62, 175, 124)
+  >.li_title
+    color rgb(62, 175, 124)
 .li_title
   color #333
   font-size 15px
@@ -199,7 +195,8 @@ export default {
   padding $navbarHeight 2rem 0
   max-width $homePageWidth
   margin 0px auto
-  display block
+  display flex
+  justify-content center
   .hero
     text-align center
     img

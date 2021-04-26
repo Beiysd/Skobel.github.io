@@ -3,11 +3,11 @@
  # @name: 
  # @author: wuxd
  # @Date: 2021-04-15 16:57:02
- # @LastEditTime: 2021-04-25 11:12:33
+ # @LastEditTime: 2021-04-26 18:07:31
 ### 
 
 # 确保脚本抛出遇到的错误
-set -e
+# set -e
 
 # 生成静态文件
 yarn docs:build
