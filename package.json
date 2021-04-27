@@ -26,6 +26,7 @@
     "axios": "^0.21.1",
     "directory-tree": "^2.2.7",
     "element-ui": "^2.15.1",
+    "highlight.js": "^10.7.2",
     "jquery": "^3.6.0",
     "moment": "^2.29.1",
     "vuepress": "^1.8.2",

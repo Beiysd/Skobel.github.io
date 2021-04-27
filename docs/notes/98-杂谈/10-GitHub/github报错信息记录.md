@@ -1,5 +1,5 @@
 ---
-tag: false
+tag: GitHub
 author: beiysd
 title: GitHub 报错信息记录
 type: GitHub

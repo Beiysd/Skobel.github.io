@@ -121,9 +121,7 @@ export default {
             }),
         };
       });
-      console.log("userNavPrev===", userNavPrev);
       const userNav = userNavPrev.concat(nav);
-      console.log("userNav===", userNav);
 
       return userNav;
     },

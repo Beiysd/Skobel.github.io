@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="home_container">
     <div class="banner" />
     <main
       class="home"
@@ -29,28 +29,13 @@
             </div>
           </router-link>
         </ul>
+        <router-link :to="this.$site.pages[1].path" class="more_btn"
+          >阅读更多&nbsp;<span class="more_btn_arrow">&#187;</span></router-link
+        >
       </div>
-      <div class="content_right" v-if="widthIf">
-        <div class="user_logo_body">
-          <img :src="this.$site.themeConfig.logo" class="user_logo" />
-        </div>
-        <div>
-          <li>
-            <img
-              class="foot_icons"
-              src="../../public/assets/logo/article.svg"
-            />{{ this.$site.pages.length }}
-          </li>
-          |
-          <li>
-            <img class="foot_icons" src="../../public/assets/logo/eye.svg" />{{
-              this.$site.pages.length
-            }}
-          </li>
-        </div>
-      </div>
+      <HomeRight v-if="widthIf" :visite="this.visite" />
     </main>
-    <Footer v-on:getChild="getChild" :visite="this.visite" />
+    <Footer v-if="widthIf" v-on:getChild="getChild" :visite="this.visite" />
   </div>
 </template>
 
@@ -58,12 +43,14 @@
 import { articleType } from "../util";
 import moment from "moment";
 import Footer from "./Footer";
+import HomeRight from "./HomeRight";
 
 export default {
   name: "Home",
   props: ["widthIf"],
   components: {
     Footer,
+    HomeRight,
   },
   data() {
     return {
@@ -129,7 +116,7 @@ export default {
   overflow: hidden
   height: 350px
   background: url(/assets/md-imgs/home/bg_03.jpg) center center / cover no-repeat
-.new_title
+.new_title,.more_btn
   display: inline-block;
   padding: 2px 10px
   border-radius: 4px
@@ -138,23 +125,20 @@ export default {
   letter-spacing: 1px
   font-weight: 600
   color: #fff
+.more_btn
+  padding 3px 8px
+  &:hover
+    background: rgba(62, 175, 124,.8)
+  .more_btn_arrow
+    font-size 18px
 
 .content_left
   flex 4
-.content_right
-  flex 1
-  padding 0 30px
-.user_logo_body
-  border-radius 50%
-  box-shadow 0 0 6px 0 #ccc
-.user_logo
-  width 130px
-  margin 20px
-  margin-left 28px
 
 
 .home_ul
   padding 0
+
 .ul_li,
 .ul_li_small
   display: block
@@ -186,8 +170,6 @@ export default {
 .home_icons
   width 13px
   margin-right 5px
-
-
 
 
 
@@ -262,8 +244,7 @@ export default {
 
 @media (max-width: $MQMobileNarrow)
   .home
-    padding-left 1.5rem
-    padding-right 1.5rem
+    padding 1rem
     .hero
       img
         max-height 210px

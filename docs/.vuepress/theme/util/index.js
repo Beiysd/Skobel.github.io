@@ -265,3 +265,46 @@ function resolveItem(item, pages, base, groupDepth = 1) {
     };
   }
 }
+/**
+ * @name outLinks
+ * @returns 外链集合
+ */
+export function outLinks() {
+  return [
+    {
+      title: "GitHub",
+      icons: require("../../public/assets/md-imgs/footer/github.svg"),
+      link: "https://github.com/Beiysd",
+    },
+    {
+      title: "Gitee",
+      icons: require("../../public/assets/md-imgs/footer/gitee.svg"),
+      link: "https://github.com/Beiysd",
+    },
+    {
+      title: "CSDN",
+      icons: require("../../public/assets/md-imgs/footer/csdn.svg"),
+      link: "https://github.com/Beiysd",
+    },
+    {
+      title: "Email",
+      icons: require("../../public/assets/md-imgs/footer/email2.svg"),
+      email: "beiysd@126.com",
+    },
+  ];
+}
+
+export function colorRandom() {
+  //6位随机数作为颜色
+  // let randNum = Math.floor(Math.random() * Math.pow(10, 6));
+  return `rgb(${randNumbs()},${randNumbs()},${randNumbs()})`;
+}
+//三位随机数0-255=供颜色使用
+function randNumbs() {
+  let randNum = Math.floor(Math.random() * Math.pow(10, 3));
+  if (randNum >= 20 && randNum < 200) {
+    return randNum;
+  } else {
+    return randNumbs();
+  }
+}

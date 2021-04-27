@@ -2,7 +2,7 @@
  * @name: 
  * @author: wuxd
  * @Date: 2021-04-20 18:01:42
- * @LastEditTime: 2021-04-26 18:17:20
+ * @LastEditTime: 2021-04-27 15:03:06
 -->
 <template>
   <main class="page">
@@ -42,13 +42,13 @@
 
     <Content class="theme-default-content" />
     <!-- 更新时间 -->
-    <PageEdit />
+    <!-- <PageEdit /> -->
 
     <!-- 上一页/下一页 -->
     <PageNav v-bind="{ sidebarItems }" />
 
     <slot name="bottom" />
-    <button @click="messShow">click</button>
+    <!-- <button @click="messShow">click</button> -->
     <BackTop />
   </main>
 </template>

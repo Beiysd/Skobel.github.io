@@ -1,5 +1,5 @@
 ---
-tag: false
+tag: GitHub
 author: beiysd
 title: github clone 速度慢解决方法
 type: GitHub

@@ -1,5 +1,5 @@
 ---
-tag: Ngix
+tag: Nginx
 author: beiysd
 title: Nginx 跨域处理
 ---
