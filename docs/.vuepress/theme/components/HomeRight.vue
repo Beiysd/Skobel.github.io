@@ -2,7 +2,7 @@
  * @name: 
  * @author: wuxd
  * @Date: 2021-04-27 13:42:05
- * @LastEditTime: 2021-04-27 18:08:15
+ * @LastEditTime: 2021-04-27 18:55:10
 -->
 <template>
   <div class="content_right">
@@ -10,19 +10,17 @@
       <img :src="this.$site.themeConfig.logo" class="user_logo" />
     </div>
     <div class="user_li_body">
-      <pre style="textAlign:left;width:170px;height:195px;fontSize:13px;">
-          <code class="js">
-              <!-- {{` -->
-/**
-* @Name:    Beiysd
-* @Author:  beiysd
-* @Article: {{this.$site.pages.length}}
-* @View:    {{visite}}
-* @Desc:    我的小破站
-* @Date:    2021-04-01
-*/
-<!-- `}}  -->
-</code>
+      <pre class="code_body">
+        <code class="js" :id="randNumbs(5)">
+    /** 
+    * @Name: Beiysd 
+    * @Author: beiysd 
+    * @Article:{{this.$site.pages.length}}
+    * @View: {{this.newVisite}}
+    * @Desc: 我的小破站 
+    * @Date: 2021-04-01 
+    */
+        </code>
       </pre>
     </div>
     <div class="out_li_body">
@@ -58,8 +56,7 @@
   </div>
 </template>
 <script>
-import { outLinks, colorRandom } from "../util";
-import hljs from "highlight.js";
+import { outLinks, colorRandom, randNumbs } from "../util";
 import "highlight.js/styles/vs2015.css";
 export default {
   props: ["visite"],
@@ -67,19 +64,18 @@ export default {
     return {
       outLinks,
       colorRandom,
+      randNumbs,
       tagList: [],
-      //   newVisite: 0,
-      name: "a",
+      newVisite: 0,
     };
   },
   mounted() {
     this.getTagList();
-    this.code();
   },
   watch: {
     visite: function(newValue, oldValue) {
       if (newValue !== oldValue) {
-        this.code();
+        this.newVisite = newValue;
       }
     },
   },
@@ -99,15 +95,6 @@ export default {
       }, []);
       this.tagList = arr;
     },
-    /**
-     * @name code
-     * @description 监听返回data为true 启用
-     */
-    code() {
-      document.querySelectorAll("pre code").forEach((block) => {
-        hljs.highlightBlock(block);
-      });
-    },
   },
 };
 </script>
@@ -117,21 +104,21 @@ export default {
   padding 30px
   text-align center
 .user_logo_body
-  display: flex;
+  display flex;
   margin 0 auto
   align-items: center;
-  width: 135px;
-  height: 135px;
+  width 135px;
+  height 135px;
   border-radius 50%
   box-shadow 0 0 6px 0 #ccc
 .user_logo
-  width: 95px;
-  height: 95px;
-  margin-left: 30px;
+  width 95px
+  height 95px
+  margin-left 30px
 .user_li_body
   display flex
   width 155px
-  color: #666;
+  color #666;
   margin 0 auto
   align-items center
   .user_li
@@ -187,6 +174,12 @@ export default {
     &:hover
        opacity 1
 
-.code_content
+.code_body
     text-align left
+    width 170px
+    height 150px
+    font-size 13px
+    background #1E1E1E
+    color #57A64A
+    border-radius 4px
 </style>

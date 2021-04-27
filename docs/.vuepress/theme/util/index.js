@@ -297,14 +297,23 @@ export function outLinks() {
 export function colorRandom() {
   //6位随机数作为颜色
   // let randNum = Math.floor(Math.random() * Math.pow(10, 6));
-  return `rgb(${randNumbs()},${randNumbs()},${randNumbs()})`;
+  return `rgb(${randColorNumbs()},${randColorNumbs()},${randColorNumbs()})`;
 }
 //三位随机数0-255=供颜色使用
-function randNumbs() {
+function randColorNumbs() {
   let randNum = Math.floor(Math.random() * Math.pow(10, 3));
   if (randNum >= 20 && randNum < 200) {
     return randNum;
   } else {
-    return randNumbs();
+    return randColorNumbs();
   }
+}
+/**
+ * @name randNumbs
+ * @param {Number} num 正整数
+ * @returns 返回一个num位的随机数
+ */
+export function randNumbs(num) {
+  let randNum = Math.floor(Math.random() * Math.pow(10, num));
+  return randNum;
 }
