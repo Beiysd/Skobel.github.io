@@ -1,6 +1,6 @@
 <template>
   <div class="home_container">
-    <div class="banner" />
+    <div class="banner" :style="{ height: widthIf ? '350px' : '150px' }" />
     <main
       class="home"
       :aria-labelledby="data.heroText !== null ? 'main-title' : null"
@@ -33,9 +33,9 @@
           >阅读更多&nbsp;<span class="more_btn_arrow">&#187;</span></router-link
         >
       </div>
-      <HomeRight v-if="widthIf" :visite="this.visite" />
+      <HomeRight v-if="widthIf" />
     </main>
-    <Footer v-if="widthIf" v-on:getChild="getChild" :visite="this.visite" />
+    <Footer v-on:getChild="getChild" :visite="this.visite" />
   </div>
 </template>
 
@@ -64,6 +64,7 @@ export default {
   },
 
   methods: {
+    //父级获取子级传递的内容
     getChild: function(value) {
       this.visite = value;
     },
@@ -115,7 +116,7 @@ export default {
   text-align: center
   overflow: hidden
   height: 350px
-  background: url(/assets/md-imgs/home/bg_03.jpg) center center / cover no-repeat
+  background: url(/assets/md-imgs/home/bg01.jpeg) center center / cover no-repeat
 .new_title,.more_btn
   display: inline-block;
   padding: 2px 10px

@@ -2,7 +2,7 @@
  * @name:
  * @author: wuxd
  * @Date: 2021-03-20 12:06:48
- * @LastEditTime: 2021-04-26 18:35:50
+ * @LastEditTime: 2021-04-28 09:22:37
  */
 const path = require("path");
 const autoGetSidebarOptionBySrcDir = require("./utils/get-sidebar-by-dir");
@@ -13,6 +13,7 @@ module.exports = {
   head: [
     ["link", { rel: "manifest", href: "/manifest.json" }],
     ["link", { rel: "apple-touch-icon", href: "/assets/logo/pkp.png" }],
+    ["link", { rel: "icon", href: "/assets/logo/pkq_512.ico" }],
     [
       "script",
       {},

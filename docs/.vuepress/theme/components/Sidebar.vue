@@ -2,7 +2,7 @@
  * @name: 
  * @author: wuxd
  * @Date: 2021-04-20 18:01:42
- * @LastEditTime: 2021-04-25 18:16:35
+ * @LastEditTime: 2021-04-28 09:18:42
 -->
 <template>
   <aside class="sidebar">
@@ -12,18 +12,19 @@
 
     <SidebarLinks :depth="0" :items="items" v-if="widthIf" />
     <slot name="bottom" />
+    <HomeRight v-if="!widthIf" sides="true" />
   </aside>
 </template>
 
 <script>
 import SidebarLinks from "@theme/components/SidebarLinks.vue";
 import NavLinks from "@theme/components/NavLinks.vue";
+import HomeRight from "@theme/components/HomeRight.vue";
+import Footer from "@theme/components/Footer.vue";
 
 export default {
   name: "Sidebar",
-
-  components: { SidebarLinks, NavLinks },
-
+  components: { SidebarLinks, NavLinks, HomeRight },
   props: ["items", "widthIf"],
 };
 </script>

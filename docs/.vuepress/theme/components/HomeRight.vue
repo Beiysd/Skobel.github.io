@@ -2,14 +2,15 @@
  * @name: 
  * @author: wuxd
  * @Date: 2021-04-27 13:42:05
- * @LastEditTime: 2021-04-27 18:55:10
+ * @LastEditTime: 2021-04-28 11:45:24
 -->
 <template>
   <div class="content_right">
-    <div class="user_logo_body">
+    <div class="user_logo_body" v-if="!sides">
       <img :src="this.$site.themeConfig.logo" class="user_logo" />
     </div>
-    <div class="user_li_body">
+    <textarea id="test" disabled="disabled" class="code_body_auto"></textarea>
+    <!-- <div class="user_li_body">
       <pre class="code_body">
         <code class="js" :id="randNumbs(5)">
     /** 
@@ -22,7 +23,7 @@
     */
         </code>
       </pre>
-    </div>
+    </div> -->
     <div class="out_li_body">
       <li
         v-for="items in outLinks().slice(0, 3)"
@@ -56,10 +57,12 @@
   </div>
 </template>
 <script>
+import $ from "jquery";
 import { outLinks, colorRandom, randNumbs } from "../util";
+import { getCount } from "../util/tongji";
 import "highlight.js/styles/vs2015.css";
 export default {
-  props: ["visite"],
+  props: ["visite", "sides"],
   data() {
     return {
       outLinks,
@@ -67,17 +70,26 @@ export default {
       randNumbs,
       tagList: [],
       newVisite: 0,
+      indx: 0,
+      timer: null,
     };
   },
   mounted() {
     this.getTagList();
+    this.visiteChange();
+    this.timer = setInterval(this.testWord, 0.02 * 1000);
   },
-  watch: {
-    visite: function(newValue, oldValue) {
-      if (newValue !== oldValue) {
-        this.newVisite = newValue;
-      }
-    },
+  // watch: {
+  // visite: function(newValue, oldValue) {
+  //   if (newValue !== oldValue) {
+  //     this.newVisite = newValue;
+  //   }
+  // },
+  // },
+  beforeDestroy() {
+    if (this.timer) {
+      clearInterval(this.timer);
+    }
   },
   methods: {
     getTagList() {
@@ -94,6 +106,22 @@ export default {
         }
       }, []);
       this.tagList = arr;
+    },
+    visiteChange: async function() {
+      const num = await getCount("home");
+      this.newVisite = num;
+    },
+
+    testWord() {
+      const str = `/**\n* @Name: Beiysd\n* @Author: beiysd\n* @Article:${this.$site.pages.length}\n* @View: ${this.newVisite}\n* @Desc: 我的小破站\n* @Date: 2021-04-01\n*/`;
+
+      let strs = str.slice(0, this.indx + 1);
+      $("#test").html(strs);
+      this.indx += 1;
+      if (this.timer && this.indx >= str.length) {
+        clearInterval(this.timer);
+        this.indx = 0;
+      }
     },
   },
 };
@@ -182,4 +210,14 @@ export default {
     background #1E1E1E
     color #57A64A
     border-radius 4px
+.code_body_auto
+  width 148px
+  height 130px
+  padding 10px 5px
+  background #1E1E1E
+  color #57A64A
+  border 0px
+  border-radius 4px
+  resize none
+  font-family source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace
 </style>
