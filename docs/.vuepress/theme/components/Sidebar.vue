@@ -2,7 +2,7 @@
  * @name: 
  * @author: wuxd
  * @Date: 2021-04-20 18:01:42
- * @LastEditTime: 2021-04-28 09:18:42
+ * @LastEditTime: 2021-04-28 18:03:59
 -->
 <template>
   <aside class="sidebar">
@@ -20,7 +20,6 @@
 import SidebarLinks from "@theme/components/SidebarLinks.vue";
 import NavLinks from "@theme/components/NavLinks.vue";
 import HomeRight from "@theme/components/HomeRight.vue";
-import Footer from "@theme/components/Footer.vue";
 
 export default {
   name: "Sidebar",

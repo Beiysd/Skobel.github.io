@@ -1,6 +1,6 @@
 <template>
   <div class="home_container">
-    <div class="banner" :style="{ height: widthIf ? '350px' : '150px' }" />
+    <HomeBanner :widthIf="widthIf" />
     <main
       class="home"
       :aria-labelledby="data.heroText !== null ? 'main-title' : null"
@@ -44,6 +44,7 @@ import { articleType } from "../util";
 import moment from "moment";
 import Footer from "./Footer";
 import HomeRight from "./HomeRight";
+import HomeBanner from "./HomeBanner";
 
 export default {
   name: "Home",
@@ -51,6 +52,7 @@ export default {
   components: {
     Footer,
     HomeRight,
+    HomeBanner,
   },
   data() {
     return {
@@ -110,12 +112,7 @@ export default {
 </script>
 
 <style lang="stylus">
-.banner
-  margin-top 60px
-  text-align: center
-  overflow: hidden
-  height: 350px
-  background: url(/assets/md-imgs/home/bg01.jpeg) center center / cover no-repeat
+
 .new_title,.more_btn
   display: inline-block;
   padding: 2px 10px

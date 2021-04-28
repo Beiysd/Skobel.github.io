@@ -72,11 +72,9 @@ export default {
   },
   beforeCreate() {
     this.showLoading = true;
-    console.log("beforeCreate-alyout", this.showLoading);
   },
   mounted() {
     this.showLoading = false;
-    console.log("mounted-alyout", this.showLoading);
 
     this.$router.afterEach(() => {
       this.isSidebarOpen = false;

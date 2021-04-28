@@ -2,7 +2,7 @@
  * @name:
  * @author: wuxd
  * @Date: 2021-03-20 12:06:48
- * @LastEditTime: 2021-04-28 09:22:37
+ * @LastEditTime: 2021-04-28 17:00:08
  */
 const path = require("path");
 const autoGetSidebarOptionBySrcDir = require("./utils/get-sidebar-by-dir");
@@ -14,6 +14,8 @@ module.exports = {
     ["link", { rel: "manifest", href: "/manifest.json" }],
     ["link", { rel: "apple-touch-icon", href: "/assets/logo/pkp.png" }],
     ["link", { rel: "icon", href: "/assets/logo/pkq_512.ico" }],
+    ["meta", { name: "baidu-site-verification", content: "code-ebcdRcBbIf" }],
+    ["script", { src: "./utils/autopush-baidu.js" }],
     [
       "script",
       {},
