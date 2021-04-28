@@ -2,7 +2,7 @@
  * @name: 
  * @author: wuxd
  * @Date: 2021-04-27 13:42:05
- * @LastEditTime: 2021-04-28 11:45:24
+ * @LastEditTime: 2021-04-28 14:04:14
 -->
 <template>
   <div class="content_right">
@@ -138,7 +138,6 @@ export default {
   width 135px;
   height 135px;
   border-radius 50%
-  box-shadow 0 0 6px 0 #ccc
 .user_logo
   width 95px
   height 95px

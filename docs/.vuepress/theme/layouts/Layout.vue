@@ -5,37 +5,40 @@
     @touchstart="onTouchStart"
     @touchend="onTouchEnd"
   >
-    <Navbar
-      v-if="shouldShowNavbar"
-      @toggle-sidebar="toggleSidebar"
-      v-on:getWidthIf="getWidthIf"
-    />
+    <div v-if="!this.showLoading">
+      <Navbar
+        v-if="shouldShowNavbar"
+        @toggle-sidebar="toggleSidebar"
+        v-on:getWidthIf="getWidthIf"
+      />
 
-    <div class="sidebar-mask" @click="toggleSidebar(false)" />
+      <div class="sidebar-mask" @click="toggleSidebar(false)" />
 
-    <Sidebar
-      :items="sidebarItems"
-      @toggle-sidebar="toggleSidebar"
-      :widthIf="widthIf"
-    >
-      <template #top>
-        <slot name="sidebar-top" />
-      </template>
-      <template #bottom>
-        <slot name="sidebar-bottom" />
-      </template>
-    </Sidebar>
+      <Sidebar
+        :items="sidebarItems"
+        @toggle-sidebar="toggleSidebar"
+        :widthIf="widthIf"
+      >
+        <template #top>
+          <slot name="sidebar-top" />
+        </template>
+        <template #bottom>
+          <slot name="sidebar-bottom" />
+        </template>
+      </Sidebar>
 
-    <Home v-if="$page.frontmatter.home" :widthIf="widthIf" />
+      <Home v-if="$page.frontmatter.home" :widthIf="widthIf" />
 
-    <Page v-else :sidebar-items="sidebarItems" :widthIf="widthIf">
-      <template #top>
-        <slot name="page-top" />
-      </template>
-      <template #bottom>
-        <slot name="page-bottom" />
-      </template>
-    </Page>
+      <Page v-else :sidebar-items="sidebarItems" :widthIf="widthIf">
+        <template #top>
+          <slot name="page-top" />
+        </template>
+        <template #bottom>
+          <slot name="page-bottom" />
+        </template>
+      </Page>
+    </div>
+    <Loading v-if="this.showLoading" />
   </div>
 </template>
 
@@ -45,6 +48,7 @@ import Navbar from "@theme/components/Navbar.vue";
 import Page from "@theme/components/Page.vue";
 import Sidebar from "@theme/components/Sidebar.vue";
 import Footer from "@theme/components/Footer.vue";
+import Loading from "@theme/components/Loading.vue";
 import { resolveSidebarItems } from "../util";
 
 export default {
@@ -56,13 +60,27 @@ export default {
     Sidebar,
     Navbar,
     Footer,
+    Loading,
   },
 
   data() {
     return {
       isSidebarOpen: false,
       widthIf: null,
+      showLoading: true,
     };
+  },
+  beforeCreate() {
+    this.showLoading = true;
+    console.log("beforeCreate-alyout", this.showLoading);
+  },
+  mounted() {
+    this.showLoading = false;
+    console.log("mounted-alyout", this.showLoading);
+
+    this.$router.afterEach(() => {
+      this.isSidebarOpen = false;
+    });
   },
 
   computed: {
@@ -110,12 +128,6 @@ export default {
         userPageClass,
       ];
     },
-  },
-
-  mounted() {
-    this.$router.afterEach(() => {
-      this.isSidebarOpen = false;
-    });
   },
 
   methods: {
