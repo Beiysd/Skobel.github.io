@@ -38,6 +38,7 @@
         </template>
       </Page>
     </div>
+    <router-view></router-view>
     <Loading v-if="this.showLoading" />
   </div>
 </template>

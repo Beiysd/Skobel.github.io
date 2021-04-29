@@ -1,69 +1,271 @@
-<!--
- * @name: 
- * @author: wuxd
- * @Date: 2021-04-28 16:05:15
- * @LastEditTime: 2021-04-28 18:21:43
--->
 <template>
-  <div>
-    <Navbar @toggle-sidebar="toggleSidebar" />
-    <div class="sidebar-mask" @click="toggleSidebar(false)" />
+  <div
+    class="theme-container"
+    :class="pageClasses"
+    @touchstart="onTouchStart"
+    @touchend="onTouchEnd"
+  >
+    <div v-if="!this.showLoading">
+      <Navbar
+        v-if="shouldShowNavbar"
+        @toggle-sidebar="toggleSidebar"
+        v-on:getWidthIf="getWidthIf"
+      />
 
-    <HomeBanner :widthIf="this.widthIf" />timeline
+      <div class="sidebar-mask" @click="toggleSidebar(false)" />
+
+      <Sidebar
+        :items="sidebarItems"
+        @toggle-sidebar="toggleSidebar"
+        :widthIf="widthIf"
+        v-if="!widthIf"
+      >
+        <template #top>
+          <slot name="sidebar-top" />
+        </template>
+        <template #bottom>
+          <slot name="sidebar-bottom" />
+        </template>
+      </Sidebar>
+      <HomeBanner :widthIf="widthIf" />
+    </div>
+    <div class="line_body" :style="{ width: widthIf ? '60%' : '85%' }">
+      <div
+        v-for="(parItem, index) in this.list"
+        :key="index"
+        class="line_block"
+      >
+        <div class="line_block_tag">{{ parItem[0].upTime }}</div>
+        <router-link
+          v-for="childItem in parItem"
+          :key="childItem.path"
+          :to="childItem.path"
+          class="line_li"
+        >
+          <div>
+            {{ childItem.title }}
+            <div class="line_li_time">
+              <img
+                class="line_li_time_icons"
+                src="../public/assets/logo/clock.svg"
+              />{{ childItem.lastUpdated }}
+            </div>
+          </div>
+          <span class="right_icon">&#8250;</span>
+        </router-link>
+      </div>
+    </div>
     <Footer />
+    <Loading v-if="this.showLoading" />
   </div>
 </template>
+
 <script>
-import HomeBanner from "@theme/components/HomeBanner";
-import Navbar from "@theme/components/Navbar";
-import Footer from "@theme/components/Footer";
-import Sidebar from "@theme/components/Sidebar";
-import moment from "moment";
+import HomeBanner from "@theme/components/HomeBanner.vue";
+import Navbar from "@theme/components/Navbar.vue";
+import Sidebar from "@theme/components/Sidebar.vue";
+import Footer from "@theme/components/Footer.vue";
+import Loading from "@theme/components/Loading.vue";
 import { resolveSidebarItems } from "../theme/util";
+import moment from "moment";
+
 export default {
-  name: "timeLine",
-  components: { HomeBanner, Navbar, Footer, Sidebar },
+  name: "TimeLine",
+
+  components: {
+    HomeBanner,
+    Sidebar,
+    Navbar,
+    Footer,
+    Loading,
+  },
+
   data() {
     return {
-      list: [],
-      widthIf: null,
       isSidebarOpen: false,
+      widthIf: null,
+      showLoading: true,
+      list: [],
     };
   },
+  beforeCreate() {
+    this.showLoading = true;
+  },
   mounted() {
-    window.addEventListener("resize", this.resize, true);
-    this.resize();
-    this.getAll();
+    this.showLoading = false;
+
+    this.$router.afterEach(() => {
+      this.isSidebarOpen = false;
+    });
+    this.getAllList();
   },
-  beforeDestroy() {
-    window.removeEventListener("resize", this.resize, true);
+
+  computed: {
+    shouldShowNavbar() {
+      const { themeConfig } = this.$site;
+      const { frontmatter } = this.$page;
+      if (frontmatter.navbar === false || themeConfig.navbar === false) {
+        return false;
+      }
+      return (
+        this.$title ||
+        themeConfig.logo ||
+        themeConfig.repo ||
+        themeConfig.nav ||
+        this.$themeLocaleConfig.nav
+      );
+    },
+
+    shouldShowSidebar() {
+      const { frontmatter } = this.$page;
+      return (
+        !frontmatter.home &&
+        frontmatter.sidebar !== false &&
+        this.sidebarItems.length
+      );
+    },
+
+    sidebarItems() {
+      return resolveSidebarItems(
+        this.$page,
+        this.$page.regularPath,
+        this.$site,
+        this.$localePath
+      );
+    },
+
+    pageClasses() {
+      const userPageClass = this.$page.frontmatter.pageClass;
+      return [
+        {
+          "no-navbar": !this.shouldShowNavbar,
+          "sidebar-open": this.isSidebarOpen,
+          "no-sidebar": !this.shouldShowSidebar,
+        },
+        userPageClass,
+      ];
+    },
+    timeNumber() {
+      return function(str) {
+        return str ? moment(str).valueOf() : 0;
+      };
+    },
+    timeArr() {
+      //[[a]]
+      //二维数组转为一维数组
+      return function(arr) {
+        let res = arr.reduce((pre, cur) => {
+          pre = pre.concat(cur);
+          return pre;
+        }, []);
+        return res;
+      };
+    },
+    months() {
+      return function(time) {
+        return moment(time).format("YYYY-MM");
+      };
+    },
   },
+
   methods: {
-    resize() {
-      let widths = document.documentElement.clientWidth;
-      if (widths > 719) {
-        this.widthIf = true;
-      } else {
-        this.widthIf = false;
+    toggleSidebar(to) {
+      this.isSidebarOpen = typeof to === "boolean" ? to : !this.isSidebarOpen;
+      this.$emit("toggle-sidebar", this.isSidebarOpen);
+    },
+
+    // side swipe
+    onTouchStart(e) {
+      this.touchStart = {
+        x: e.changedTouches[0].clientX,
+        y: e.changedTouches[0].clientY,
+      };
+    },
+
+    onTouchEnd(e) {
+      const dx = e.changedTouches[0].clientX - this.touchStart.x;
+      const dy = e.changedTouches[0].clientY - this.touchStart.y;
+      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+        if (dx > 0 && this.touchStart.x <= 80) {
+          this.toggleSidebar(true);
+        } else {
+          this.toggleSidebar(false);
+        }
       }
     },
-    getAll() {
+    //接收窗口宽度变化
+    getWidthIf(value) {
+      this.widthIf = value;
+    },
+    getAllList() {
       const arr = this.$site.pages.map((v) => {
         return {
           ...v,
           time: this.timeNumber(v.lastUpdated),
         };
       });
-      const arrNext = arr.filter((v) => v.time > 0 && v.path !== "/");
+      const arrNext = arr.filter(
+        (v) =>
+          v.time > 0 && v.path !== "/" && v.frontmatter && !v.frontmatter.layout
+      );
       //倒序big->little
       const listPrev = arrNext.sort((a, b) =>
         this.timeNumber(a.lastUpdated) > this.timeNumber(b.lastUpdated) ? -1 : 1
       );
-      //   const list =  listPrev.reduce((pre,cur)=>{
-      //       if()
-      //   },[]);
+      //时间轴二维数组生成
+      const list = listPrev.reduce((pre, cur) => {
+        let time = this.months(cur.lastUpdated);
+        let has = this.timeArr(pre).findIndex((v) => v.upTime === time) > -1;
+        if (has) {
+          pre.map((v) => {
+            let res = v;
+            if (v.findIndex((m) => m.upTime === time) > -1) {
+              res.push({ ...cur, ...{ upTime: time } });
+            }
+            return res;
+          });
+          return pre;
+        } else {
+          pre.push([{ ...cur, ...{ upTime: time } }]);
+          return pre;
+        }
+      }, []);
+      this.list = list;
     },
   },
-  computed: {},
 };
 </script>
+<style lang="stylus">
+.line_body
+  margin 0 auto
+  padding-top 30px
+.line_block_tag
+  font-size: 22px;
+  font-family: fantasy;
+  font-style: italic;
+  margin-bottom: 15px;
+.line_li
+  display flex
+  align-items center
+  justify-content space-between
+  padding 10px
+  color #666
+  border-radius 6px
+  margin-left 10px
+  &:hover
+    color rgb(62, 175, 124)
+    box-shadow 0 0 6px 0 rgb(62, 175, 124)
+    .right_icon
+      font-size 34px
+  .line_li_time
+    display flex
+    align-items center
+    font-size 14px
+    margin-top 3px
+    .line_li_time_icons
+      width 13px
+      margin-right 5px
+  .right_icon
+    font-size 30px
+    color rgb(62, 175, 124)
+</style>

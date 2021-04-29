@@ -2,7 +2,7 @@
  * @name: 
  * @author: wuxd
  * @Date: 2021-04-27 13:42:05
- * @LastEditTime: 2021-04-28 14:04:14
+ * @LastEditTime: 2021-04-29 14:04:50
 -->
 <template>
   <div class="content_right">
@@ -60,7 +60,6 @@
 import $ from "jquery";
 import { outLinks, colorRandom, randNumbs } from "../util";
 import { getCount } from "../util/tongji";
-import "highlight.js/styles/vs2015.css";
 export default {
   props: ["visite", "sides"],
   data() {

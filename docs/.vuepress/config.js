@@ -2,10 +2,10 @@
  * @name:
  * @author: wuxd
  * @Date: 2021-03-20 12:06:48
- * @LastEditTime: 2021-04-28 17:00:08
+ * @LastEditTime: 2021-04-29 14:31:04
  */
 const path = require("path");
-const autoGetSidebarOptionBySrcDir = require("./utils/get-sidebar-by-dir");
+const autoGetSidebarOptionBySrcDir = require("./public/utils/get-sidebar-by-dir");
 
 module.exports = {
   title: "Beiysd",
@@ -15,18 +15,8 @@ module.exports = {
     ["link", { rel: "apple-touch-icon", href: "/assets/logo/pkp.png" }],
     ["link", { rel: "icon", href: "/assets/logo/pkq_512.ico" }],
     ["meta", { name: "baidu-site-verification", content: "code-ebcdRcBbIf" }],
-    ["script", { src: "./utils/autopush-baidu.js" }],
-    [
-      "script",
-      {},
-      `var _hmt = _hmt || [];
-      (function() {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?345ab2bf830dc5c68a96925eb1dd0b45";
-        var s = document.getElementsByTagName("script")[0]; 
-        s.parentNode.insertBefore(hm, s);
-      })();`,
-    ],
+    ["script", { src: "/utils/autopush-baidu.js" }],
+    ["script", { src: "/utils/tongji_baidu.js" }],
   ],
   base: "/",
   serviceWorker: true,

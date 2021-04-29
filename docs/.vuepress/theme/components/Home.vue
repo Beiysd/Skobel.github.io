@@ -78,7 +78,10 @@ export default {
           time: this.timeNumber(v.lastUpdated),
         };
       });
-      const arrNext = arr.filter((v) => v.time > 0 && v.path !== "/");
+      const arrNext = arr.filter(
+        (v) =>
+          v.time > 0 && v.path !== "/" && v.frontmatter && v.frontmatter.tag
+      );
       //倒序big->little
       const list = arrNext.sort((a, b) =>
         this.timeNumber(a.lastUpdated) > this.timeNumber(b.lastUpdated) ? -1 : 1
