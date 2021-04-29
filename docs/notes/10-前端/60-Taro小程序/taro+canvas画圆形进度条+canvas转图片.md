@@ -1,5 +1,5 @@
 ---
-tag: Taro
+tag: taro+canvas
 author: beiysd
 title: taro+canvas 画圆形进度条+canvas 转图片
 ---

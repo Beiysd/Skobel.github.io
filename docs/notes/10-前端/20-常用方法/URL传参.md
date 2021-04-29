@@ -1,5 +1,5 @@
 ---
-tag: function
+tag: url-search
 author: beiysd
 title: 地址栏传参
 ---

@@ -1,5 +1,5 @@
 ---
-tag: function
+tag: floot
 author: beiysd
 title: 小数点后 x 位
 ---

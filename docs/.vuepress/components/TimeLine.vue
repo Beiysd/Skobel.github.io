@@ -35,14 +35,28 @@
         :key="index"
         class="line_block"
       >
-        <div class="line_block_tag">{{ parItem[0].upTime }}</div>
-        <router-link
-          v-for="childItem in parItem"
-          :key="childItem.path"
-          :to="childItem.path"
-          class="line_li"
-        >
-          <div>
+        <div class="line_block_tag">
+          <span>{{ parItem[0].upTime }}</span
+          ><span
+            class="close_btn"
+            v-if="openId === index"
+            @click="switchChange('')"
+            >关闭<span class="arrow"></span></span
+          ><span
+            class="close_btn"
+            v-if="openId !== index"
+            @click="switchChange(index)"
+            >展开<span class="arrow"></span
+          ></span>
+        </div>
+        <div :class="openId === index ? 'line_li_body' : 'close_line_li_body'">
+          <router-link
+            v-for="childItem in parItem"
+            :key="childItem.path"
+            :to="childItem.path"
+            :class="widthIf ? 'line_li' : 'line_li_small'"
+          >
+            <!-- <div class="line_li_time_body"> -->
             {{ childItem.title }}
             <div class="line_li_time">
               <img
@@ -50,9 +64,10 @@
                 src="../public/assets/logo/clock.svg"
               />{{ childItem.lastUpdated }}
             </div>
-          </div>
-          <span class="right_icon">&#8250;</span>
-        </router-link>
+            <!-- </div> -->
+            <!-- <span class="right_icon">&#8250;</span> -->
+          </router-link>
+        </div>
       </div>
     </div>
     <Footer />
@@ -86,6 +101,7 @@ export default {
       widthIf: null,
       showLoading: true,
       list: [],
+      openId: "",
     };
   },
   beforeCreate() {
@@ -169,6 +185,10 @@ export default {
   },
 
   methods: {
+    //开关变化
+    switchChange(index) {
+      this.openId = index;
+    },
     toggleSidebar(to) {
       this.isSidebarOpen = typeof to === "boolean" ? to : !this.isSidebarOpen;
       this.$emit("toggle-sidebar", this.isSidebarOpen);
@@ -237,6 +257,7 @@ export default {
 </script>
 <style lang="stylus">
 .line_body
+  position relative
   margin 0 auto
   padding-top 30px
 .line_block_tag
@@ -244,23 +265,45 @@ export default {
   font-family: fantasy;
   font-style: italic;
   margin-bottom: 15px;
-.line_li
+.line_li_body,.close_line_li_body
+  border-left 6px solid rgba(0,0,0,.07)
+  border-radius: 4px;
+.close_line_li_body
+  height 420px
+  overflow hidden
+.close_btn
+  cursor pointer
+  font-size: 15px;
+  float: right;
+  font-style: normal;
+  font-weight: 600;
+.arrow
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 6px solid #666;
+  margin-left: 5px;
+.line_li,.line_li_small
   display flex
+  position relative
   align-items center
   justify-content space-between
-  padding 10px
+  padding 23px 20px
   color #666
   border-radius 6px
-  margin-left 10px
+  margin-left -5px
+  font-size 15px
   &:hover
     color rgb(62, 175, 124)
-    box-shadow 0 0 6px 0 rgb(62, 175, 124)
-    .right_icon
-      font-size 34px
+    background rgba(62, 175, 124, 0.15)
+    &::before
+      width 7px
+      height 7px
+      background rgb(62, 175, 124)
+
   .line_li_time
     display flex
     align-items center
-    font-size 14px
+    font-size 13px
     margin-top 3px
     .line_li_time_icons
       width 13px
@@ -268,4 +311,16 @@ export default {
   .right_icon
     font-size 30px
     color rgb(62, 175, 124)
+.line_li::before
+  content ''
+  position absolute
+  left 5px
+  width 5px
+  height 5px
+  border-radius 50%
+.line_li_time_body
+  display flex
+.line_li_small
+  flex-direction column
+  align-items flex-start
 </style>

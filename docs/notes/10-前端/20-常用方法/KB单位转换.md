@@ -1,5 +1,5 @@
 ---
-tag: function
+tag: KB->MB
 author: beiysd
 title: KB 单位转换
 ---
