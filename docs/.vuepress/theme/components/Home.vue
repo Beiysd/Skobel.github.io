@@ -1,12 +1,22 @@
 <template>
   <div class="home_container">
     <HomeBanner :widthIf="widthIf" />
+    <ul>
+      <li
+        v-for="item in themesMap"
+        :key="item.color"
+        class="theme_li"
+        :style="{ background: item.color }"
+        @click="themeChangeBefore(item.name)"
+      ></li>
+      <div style="color:#666;">{{ themeName }}</div>
+    </ul>
     <main
       class="home"
       :aria-labelledby="data.heroText !== null ? 'main-title' : null"
     >
       <div class="content_left">
-        <div class="new_title">最新Blog</div>
+        <div class="new_title" style="background:#3eaf7c;">最新Blog</div>
         <ul class="home_ul">
           <router-link
             v-for="item in this.articles"
@@ -41,6 +51,7 @@
 
 <script>
 import { articleType } from "../util";
+import $ from "jquery";
 import moment from "moment";
 import Footer from "./Footer";
 import HomeRight from "./HomeRight";
@@ -58,13 +69,104 @@ export default {
     return {
       visite: 0,
       articles: [],
+      themeName: "",
+      refreshTimer: null,
+      themesMap: [
+        {
+          name: "橙金有爱",
+          color: "#d2b480",
+          lightColor: "#decdab",
+        },
+        {
+          name: "青青苹果",
+          color: "#6bd887",
+          lightColor: "#eafae7",
+        },
+        {
+          name: "水榭春天",
+          color: "#96cd79",
+          lightColor: "#d7e6c5",
+        },
+        {
+          name: "水墨人生",
+          color: "#7a8990",
+          lightColor: "#dadee1",
+        },
+        {
+          name: "绿色生机",
+          color: "#49cf88",
+          lightColor: "#ebfff5",
+        },
+        {
+          name: "优雅海蓝",
+          color: "#59c0e9",
+          lightColor: "#e6f5f8",
+        },
+      ],
     };
   },
   mounted() {
     this.newArticle();
+    // this.handleRefresh();
   },
-
+  beforeDestroy() {
+    if (this.refreshTimer) {
+      clearTimeout(this.refreshTimer);
+    }
+  },
   methods: {
+    // 轮询刷新 style
+    handleRefresh() {
+      this.refreshTimer = setTimeout(() => {
+        clearTimeout(this.refreshTimer);
+        this.updateStyleElements();
+        this.handleRefresh();
+      }, 2 * 1000);
+    },
+    themeChangeBefore(value) {
+      this.themeName = value;
+      this.updateStyleElements();
+    },
+    updateStyleElements() {
+      const value = this.themeName;
+      console.log("theme-change=000==", value);
+      try {
+        const theme =
+          this.themesMap.find((t) => t.name === value) || this.themesMap[0];
+        // console.log("theme-change=111==", theme);
+        const { name, color, lightColor } = theme;
+        const otherThemes = this.themesMap.filter((t) => t.name !== name);
+
+        const regxColors = new RegExp(
+          otherThemes.map((t) => `(${t.color})`).join("|"),
+          "gi"
+        );
+        // console.log("regxColors===", regxColors);
+        const regxLightColors = new RegExp(
+          otherThemes.map((t) => `(${t.lightColor})`).join("|"),
+          "gi"
+        );
+        // console.log("regxLightColors===", regxLightColors);
+        const els = $("style");
+        // console.log("style===", els);
+
+        els.each((idx, item) => {
+          const content = $(item).text();
+          console.log("content===", content);
+
+          if (regxColors.test(content) || regxLightColors.test(content)) {
+            const output = content
+              .replace(regxColors, color)
+              .replace(regxLightColors, lightColor);
+            console.log("output===", output);
+
+            $(item).text(output);
+          }
+        });
+      } catch (err) {
+        console.error("修改样式失败", err);
+      }
+    },
     //父级获取子级传递的内容
     getChild: function(value) {
       this.visite = value;
@@ -135,7 +237,11 @@ export default {
 .content_left
   flex 4
 
-
+.theme_li
+  width 15px
+  height 15px
+  border-radius 50%
+  cursor pointer
 .home_ul
   padding 0
 

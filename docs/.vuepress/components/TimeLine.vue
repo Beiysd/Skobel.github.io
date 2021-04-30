@@ -57,12 +57,15 @@
             :class="widthIf ? 'line_li' : 'line_li_small'"
           >
             <!-- <div class="line_li_time_body"> -->
-            {{ childItem.title }}
+            &nbsp;
+            {{
+              moment(childItem.lastUpdated).format("MM-DD")
+            }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ childItem.title }}
             <div class="line_li_time">
-              <img
+              <!-- <img
                 class="line_li_time_icons"
                 src="../public/assets/logo/clock.svg"
-              />{{ childItem.lastUpdated }}
+              />{{ childItem.lastUpdated }} -->
             </div>
             <!-- </div> -->
             <!-- <span class="right_icon">&#8250;</span> -->
@@ -102,6 +105,7 @@ export default {
       showLoading: true,
       list: [],
       openId: "",
+      moment,
     };
   },
   beforeCreate() {
@@ -294,7 +298,7 @@ export default {
   font-size 15px
   &:hover
     color rgb(62, 175, 124)
-    background rgba(62, 175, 124, 0.15)
+    background rgba(62, 175, 124, 0.11)
     &::before
       width 7px
       height 7px
